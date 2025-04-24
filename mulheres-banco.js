@@ -7,7 +7,8 @@ const cors = require('cors')
 const app = express();
 app.use(express.json());
 app.use(cors())
-const porta=3333; 
+
+const porta = process.env.PORT || 3333;
 
 conectaBancoDeDados()
 
@@ -97,4 +98,5 @@ app.use(router.post('/mulheres', criarMulher))
 app.use(router.patch('/mulheres/:id', corrrigirMulher))
 //DELETE
 app.use(router.delete('/mulheres/:id', deletarMulher))
+
 app.listen(porta, informarPorta)
