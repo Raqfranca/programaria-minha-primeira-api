@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router()
 const conectaBancoDeDados = require('./bancoDeDados')
 const Mulher = require('./diva-model')
+const cors = require('cors')
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 const porta=3333; 
 
 conectaBancoDeDados()
@@ -74,7 +76,13 @@ async function corrrigirMulher(request, response){
 
 }
 
-function deletarMulher(request, response){
+async function deletarMulher(request, response){
+    try{
+        await Mulher.findByIdAndDelete(request.params.id)
+        response.json({ messagem: 'Mulher deletada com sucesso!' })
+    }catch(err){
+        console.log( "Erro deletar uma mulher"+ err)
+    }
 }
 
 function informarPorta (){
